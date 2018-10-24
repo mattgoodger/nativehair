@@ -1,0 +1,25 @@
+<header pageTitle="Shop" iconTitle="shopping_cart" helpTitle="Aboutuspagehelp"></header>
+<mat-card>
+<mat-card-actions align="start">
+  <form #searchForm="ngForm">
+    <mat-form-field class="example-form">
+      <input matInput type="text" placeholder="Search" #search="ngModel" ngModel id="search" name="search" minlength="3" maxlength="50">
+    </mat-form-field>
+    <span matTooltip="Search All">
+      <mat-icon color="primary" (click)="this.searchForm.reset();">clear</mat-icon>
+    </span>
+    <span class="small-spacer"></span>
+    <span matTooltip="Search All">
+      <mat-icon color="primary" (click)="getFilterData(search.value)">search</mat-icon>
+    </span>
+  </form>
+
+</mat-card-actions>
+<mat-card-content *ngIf="toggle else showProductDetails">
+  
+</mat-card-content>
+<ng-template #showProductDetails>
+
+</ng-template>
+
+</mat-card>

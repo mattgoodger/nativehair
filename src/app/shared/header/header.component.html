@@ -1,15 +1,42 @@
-<mat-card [@moveIn]='state'>
-  <mat-card-title>
-    Header Page
-  </mat-card-title>
-  <mat-card-content>
-    <button routerLink="/aboutus">Go to aboutus</button>
-    <button routerLink="/footer">Go to footer</button>
+<!-- Main navbar icons and titles -->
 
-    <br>
-    <p>
-      header works!
-    </p>
-  </mat-card-content>
-</mat-card>
+<mat-toolbar>
+    <button mat-mini-fab color="basic" [matMenuTriggerFor]="navMenu">
+        <mat-icon>dashboard</mat-icon>
+    </button>
+    <span class="example-icon"></span>
+    <mat-icon>{{iconTitle}}</mat-icon>
+    <span class="example-icon"></span>
+        {{pageTitle}}
+    <span class="example-spacer"></span>
+    <mat-icon [color]="userStatusColor" routerLink="/settings">account_box</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon matBadge="{{counter}}" matBadgePosition="before" matBadgeColor="basic">shopping_cart</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon [matMenuTriggerFor]="helpMenu">help</mat-icon>
+    <span class="example-icon"></span>
+  
 
+<!-- Info bubble text settings -->
+
+    <mat-menu #helpMenu="matMenu">
+    <div *ngIf ="helpTitle=='Settingspagehelp'">
+        This is the settings page help menu
+    </div>
+    <div *ngIf ="helpTitle=='Aboutuspagehelp'">
+            This is the about page help menu
+    </div>
+    {{helpTitle}}
+    </mat-menu>
+
+<!-- Links and icons for the drop down navbar -->
+
+     <mat-menu #navMenu="matMenu">
+        <button mat-menu-item routerLink="/"><mat-icon>home</mat-icon></button>
+        <button mat-menu-item routerLink="/aboutus"><mat-icon>person</mat-icon></button>
+        <a href="{{configData.fblink}}" target="_blank"><button mat-menu-item><mat-icon svgIcon="fb"></mat-icon></button></a>
+        <a href="{{configData.iglink}}" target="_blank"><button mat-menu-item><mat-icon svgIcon="ig"></mat-icon></button></a>
+        <button mat-menu-item routerLink="/admin"><mat-icon>settings</mat-icon></button>
+</mat-menu>
+
+ </mat-toolbar>

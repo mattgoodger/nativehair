@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { moveIn, fallIn } from "../router.animation";
+import { moveIn, fallIn } from '../router.animation';
 
 @Component({
   selector: 'aboutus',

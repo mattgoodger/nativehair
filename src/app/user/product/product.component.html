@@ -16,10 +16,46 @@
 
 </mat-card-actions>
 <mat-card-content *ngIf="toggle else showProductDetails">
-  
+
+  <mat-list>
+   <!-- <mat-list-item *ngFor="let item of members | async" (click)="showDetails(item);toggle=!toggle"> -->
+     <mat-list-item *ngFor="let item of members" (click)="showDetails(item);toggle=!toggle">  
+    <h5 mat-line>{{item.name}}
+        <mat-icon mat-list-icon>pageview</mat-icon>
+      </h5>
+      <p class="lable-hint" mat-line>{{item.category}} / {{item.scategory}}</p>
+   </mat-list-item>
+  </mat-list>
 </mat-card-content>
+
 <ng-template #showProductDetails>
-
+<b>{{myDocData.name</b>
+  <span class="small-spacer"></span>
+  <span matTooltip="Show All Products">
+    <mat-icon color="primary" (click)="toggle=!toggle">backspace</mat-icon>
+  </span>
+  <p class="lable-go" mat-line>{{myDotData.sname}} 
+     {{myDotData.lname}}</p>
+  <p class="lable-hint" mat-line>{{myDotData.descr}}</p>
+  <p class="lable-go" mat-line> Color: {{myDotData.color}} 
+    Size: {{myDotData.size}} 
+    Price: {{myDotData.price}}</p>
+  <p class="lable-error" mat-line> Shipping: {{myDotData.shipping}}
+     Discount: {{myDotData.discount}}</p>
+     <mat-error *ngIf="savedChanges">
+       <br>
+       <br> Shopping cart updated.
+       <mat-icon (click)="savedChanges=!savedChanges" color="primary">close</mat-icon>
+       <span class="med-spacer"></span>
+       <br>
+     </mat-error>
+     <br>
+     <mat-icon (click)="countProd('remove')" color="primary">remove</mat-icon>
+     {{ counter }}
+     <mat-icon (click)="countProd('add')" color="primary">add</mat-icon>
+     <span class="med-spacer"></span>
+     <button [disabled]="counter < 1" mat-raised-button color="primary" (click)="addToCart(myDocData, counter)">Add to Cart</button>
+     <br>
+     <img src="profileUrl | async" width="300" height="300">
 </ng-template>
-
 </mat-card>

@@ -112,4 +112,27 @@ delOneProductDoc(collType, docId) {
     }
   )
 }
+
+updateShoppingInterest(collType, data) {
+  let fakeresponse = true;
+  return Observable.create(
+    observer => {
+      setTimeout(() => {
+        observer.next(fakeresponse)
+      }, 2000)
+    }
+  )
+}
+
+updateShoppingCart(collType, data) {
+  let fakeresponse = true;
+  return Observable.create(
+    observer => {
+      setTimeout(() => {
+        observer.next(fakeresponse)
+      }, 2000)
+    }
+  )
+}
+
 }

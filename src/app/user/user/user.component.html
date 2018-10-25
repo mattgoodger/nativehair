@@ -1,3 +1,4 @@
+<header pageTitle="Update Details" iconTitle="account_circle" helpTitle="Settingspagehelp"></header>
 <mat-card *ngIf="!savedChanges else showSavedChangesCard">
   <form #formData="ngForm">
     <mat-card-content>
@@ -7,20 +8,20 @@
       <mat-progress-bar mode="indeterminate" *ngIf="dataLoading"></mat-progress-bar>
       <mat-error *ngIf="error">Your Authentication is invalid, please logout and log in again. Error: {{errorMessage}}</mat-error>
       <mat-card-actions align="start">
-        <button type="button" (click)="onSubmit(formData.value);" [diabled]="!formData.valid" mat-raised-button color="primary">Update</button>
-        <button type="button" (click)="logout()" mat-rasised-button color="primary">Logout</button>
+        <button type="button" (click)="onSubmit(formData.value);" [disabled]="!formData.valid" mat-raised-button color="primary">Update</button>
+        <button type="button" (click)="logout()" mat-raised-button color="primary">Logout</button>
       </mat-card-actions>
       <mat-form-field class="example-form">
-        <input matInput palceholder="name" name="name" #name="ngModel" [ngModel]="this.data?.name" ngModel required minlength="5" maxlength="30" >
+        <input matInput placeholder="Username" name="name" #name="ngModel" [ngModel]="this.data?.name" ngModel required minlength="5" maxlength="30">
       </mat-form-field>
-      <span *ngIf="name.invalid && (name.dirty || name.touched">
+      <span *ngIf="name.invalid && (name.dirty || name.touched)">
           <mat-error *ngIf="name.errors['required']">Name is required.</mat-error>
           <mat-error *ngIf="name.errors['minlength']">Name must be at least 5 characters.</mat-error>
           <mat-error *ngIf="name.errors['maxlength']">Name must not be at over 30 characters.</mat-error>
       </span>
       <br>
       <mat-form-field class="example-form">
-          <input matInput readonly placeholder="email" name="email" #email="ngModel" [ngModel]="this.data?.email" required email>
+          <input matInput readonly placeholder="Email" name="email" #email="ngModel" [ngModel]="this.data?.email" required email>
         </mat-form-field>
         <br>
         <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">Please enter a valid email</mat-error>
@@ -34,6 +35,7 @@
         </span>
     </mat-card-content>
   </form>
+</mat-card>
   <ng-template #showSavedChangesCard>
     <br>
     <br>
@@ -46,9 +48,8 @@
     <br>
     <br>
     <br>
-    <mar-card-actions align="start">
+    <mat-card-actions align="start">
       <button type="button" (click)="savedChanges=false;routeLoginPage();" mat-raised-button color="primary">Close</button>
-    </mar-card-actions>
+    </mat-card-actions>
   </ng-template>
 
-</mat-card>

@@ -98,6 +98,7 @@ export class SetproductComponent implements OnInit, OnDestroy {
         .subscribe(members => {
           if (members) {
             this.savedChanges = true;
+            this.dataLoading = false;
           }
         },
             (error) => {

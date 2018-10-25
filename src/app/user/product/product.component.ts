@@ -66,35 +66,50 @@ export class ProductComponent implements OnInit {
 
 showDetails(item) {
   this.counter = 0;
-  this.myDocData = item;
-  this.getPic();
+    this.myDocData = item;
+    this.getPic();
 
-  this.dataLoading = true;
-  let data = item;
-  return this._backendService.updateShoppingInterest('interests',data).then((success)=>{
-    this.dataLoading = false;
-   });
+      this.dataLoading = true;
+      const data = item;
+        this.querySubscription = this._backendService.updateShoppingCart('interests', data)
+          .subscribe(members => {
+          this.dataLoading = false;
+          this.counter = 0;
+          this.savedChanges = true;
+        },
+        (error) => {
+          this.error = true;
+          this.errorMessage = error.message;
+          this.dataLoading = false;
+        },
+        () => { this.error = false; this.dataLoading = false; });
   }
 
 countProd(filter) {
-  if (filter == 'add') {
+  if (filter === 'add') {
     this.counter = this.counter + 1;
   } else {
     if (this.counter > 0) {
-      this.counter = this.counter -1;
+      this.counter = this.counter - 1;
     }
   }
 }
 
 addToCart(item, counter) {
   this.dataLoading = true;
-  let data = item;
+  const data = item;
   data.qty = counter;
-  return this._backendService.updateShoppingCart('cart', data).then((success) => {
+  this.querySubscription = this._backendService.updateShoppingCart('cart', data)
+  .subscribe(members => {
     this.dataLoading = false;
     this.counter = 0;
     this.savedChanges = true;
-  });
-}
-
+  },
+  (error) => {
+    this.error = true;
+    this.errorMessage = error.message;
+    this.dataLoading = false;
+  },
+  () => { this.error = false; this.dataLoading = false; });
+  }
 }

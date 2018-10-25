@@ -8,7 +8,6 @@
           <button type="button" (click)="toggle('resMode');getFilterData(searchFormData.value);" mat-raised-button [disabled]="!searchFormData.valid"
             color="primary">Search</button>
             <span class="example-icon"></span>
-            <span class="example-icon"></span>
             <span matTooltip="Add New">
                 <mat-icon color="primary" (click)="toggle('addMode');">add</mat-icon>
             </span>
@@ -17,6 +16,7 @@
               <mat-icon color="primary" (click)="toggle('resMode');getData();">cached</mat-icon>
             </span>
         </mat-card-actions>
+        <br>
         <mat-form-field class="example-form">
           <input matInput type="text" placeholder="Catagory" id="catagory" name="catagory" #catagory="ngModel" ngModel
             minlength="3" maxlength="50">

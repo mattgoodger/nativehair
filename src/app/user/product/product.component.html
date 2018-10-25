@@ -29,19 +29,15 @@
 </mat-card-content>
 
 <ng-template #showProductDetails>
-<b>{{myDocData.name</b>
+<b>{{myDocData.name}}</b>
   <span class="small-spacer"></span>
   <span matTooltip="Show All Products">
     <mat-icon color="primary" (click)="toggle=!toggle">backspace</mat-icon>
   </span>
-  <p class="lable-go" mat-line>{{myDotData.sname}} 
-     {{myDotData.lname}}</p>
-  <p class="lable-hint" mat-line>{{myDotData.descr}}</p>
-  <p class="lable-go" mat-line> Color: {{myDotData.color}} 
-    Size: {{myDotData.size}} 
-    Price: {{myDotData.price}}</p>
-  <p class="lable-error" mat-line> Shipping: {{myDotData.shipping}}
-     Discount: {{myDotData.discount}}</p>
+  <p class="lable-go" mat-line>{{myDocData.sname}} {{myDocData.lname}}</p>
+  <p class="lable-hint" mat-line>{{myDocData.descr}}</p>
+  <p class="lable-go" mat-line> Color: {{myDocData.color}} Size: {{myDocData.size}} Price: {{myDocData.price}}</p>
+  <p class="lable-error" mat-line> Shipping: {{myDocData.shipping}} Discount: {{myDocData.discount}}</p>
      <mat-error *ngIf="savedChanges">
        <br>
        <br> Shopping cart updated.

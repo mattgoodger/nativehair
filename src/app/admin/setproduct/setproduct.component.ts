@@ -78,18 +78,16 @@ export class SetproductComponent implements OnInit, OnDestroy {
   }
   setData(formData) {
     this.dataLoading = true;
-    this.querySubscription = this._backendService.setProducts('product', formData)
-        .subscribe(members => {
-          if (members) {
+    this.querySubscription = this._backendService.setDocs('product', formData)
+        .then((res) => {
             this.savedChanges = true;
-          }
-        },
-        (error) => {
+            this.dataLoading = false;
+        }).catch(error => {
           this.error = true;
+          console.log(error.message);
           this.errorMessage = error.message;
           this.dataLoading = false;
-        },
-        () => { this.error = false; this.dataLoading = false; });
+        });
   }
 
   updateData(formData) {

@@ -1,7 +1,7 @@
 
 <mat-card>
     <mat-card-content>
-      <div wdith="100%" *ngIf="(toggleField=='searchMode') else (toggleField=='addMode')? showAddMode : ((toggleField=='editMode')? showEditMode : showResMode)">
+      <div width="100%" *ngIf="(toggleField=='searchMode') else (toggleField=='addMode')? showAddMode : ((toggleField=='editMode')? showEditMode : showResMode)">
         <!-- Search Pgae Here -->
         <form #searchFormData="ngForm" class="example-form">
           <mat-card-actions>

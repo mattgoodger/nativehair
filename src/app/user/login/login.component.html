@@ -1,16 +1,18 @@
 <header pageTitle="Sign in" iconTitle="account_circle" helpTitle="Settingspagehelp"></header>
 <mat-card>
-<div *ngIf="userloggedin; else showShopping">
+<div *ngIf="afAuth.user | async as user; else showShopping">
   <button type="button" routerLink="/product" mat-raised-button color="primary">Continue Shopping</button>
+  <button type="button" (click)="logout();" mat-raised-button color="primary">Logout</button>
+
 </div>
 <ng-template #showShopping>
   <mat-card-content>
     <form #formData="ngForm" (ngSubmit)="login('email',formData.value)" class="example-form">
       <mat-card-actions *ngIf="error">
-        <mat-error>Login credentials are not verified. Error: {{ error }}</mat-error>
+        <mat-error>Login credentials are not verified. Error: {{ errorMessage }}</mat-error>
       </mat-card-actions>
       <mat-error *ngIf="dataLoading">
-        <mat-progress-spinner mode="indeterminate" [attr.color]="primary" [value]="15"></mat-progress-spinner>
+        <mat-progress-bar mode="indeterminate" color="primary" [value]="15"></mat-progress-bar>
       </mat-error>
       <mat-error *ngIf="brokenNetwork" class="label-error">Network Connection Error.</mat-error>
       <mat-card-actions align="start">
@@ -33,10 +35,10 @@
   </mat-card-content>
   <mat-card-content>
     <mat-chip-list class="mat-chip-list-stacked" style="margin-left: 170px;">
-      <mat-chip style="width: 200px" color="primary" selected="true" (click)="login('FB')">
+      <mat-chip  color="primary" selected="true" (click)="login('FB')">
         Login With Facebook
       </mat-chip>
-        <mat-chip style="width: 200px" color="warn" selected="true" (click)="login('GOOGLE')">
+        <mat-chip  color="warn" selected="true" (click)="login('GOOGLE')">
           Login With Google
         </mat-chip>
     </mat-chip-list>

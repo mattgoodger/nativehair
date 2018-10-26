@@ -37,17 +37,17 @@ export class SetproductComponent implements OnInit, OnDestroy {
   }
 
   toggle(filter?) {
-    if (!filter) { filter = 'searchMode';
+    if (!filter) { filter = 'searchMode'
   } else { filter = filter; }
     this.toggleField = filter;
   }
 
   getData() {
     this.dataLoading = true;
-    this.querySubscription = this._backendService.getProducts('product')
-        .subscribe(members => {
-          this.members = members;
-          this.dataSource = new MatTableDataSource(members);
+    this.querySubscription = this._backendService.getDocs('product')
+        .subscribe(res => {
+          this.members = res;
+          this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.dataLoading = false;
@@ -92,23 +92,20 @@ export class SetproductComponent implements OnInit, OnDestroy {
 
   updateData(formData) {
         this.dataLoading = true;
-        this.querySubscription = this._backendService.updateProducts('product', formData)
-        .subscribe(members => {
-          if (members) {
+        this.querySubscription = this._backendService.updateDocs('product', formData)
+        .then((res) => {
             this.savedChanges = true;
             this.dataLoading = false;
-          }
-        },
-            (error) => {
+          }).catch(error => {
             this.error = true;
+            console.log(error.message);
             this.errorMessage = error.message;
             this.dataLoading = false;
-        },
-        () => { this.error = false; this.dataLoading = false; });
+          });
       }
 getDoc(docId) {
   this.dataLoading = true;
-  this.querySubscription = this._backendService.getOneProductDoc('product', docId)
+  this.querySubscription = this._backendService.getOneDoc('product', docId)
       .subscribe(res => {
         if (res) {
           this.myDocData = res;
@@ -126,24 +123,40 @@ getDoc(docId) {
 
 // 
 
-deleteDoc(docId) {
-  if (confirm('Are you sure you wish to delete this?')) {
-  this.dataLoading = true;
-  this.querySubscription = this._backendService.delOneProductDoc('product', docId)
-      .subscribe(res => {
-        if (res) {
-          this.toggle('searchMode');
-          this.dataLoading = false;
+// deleteDoc(docId) {
+//   if (confirm('Are you sure you wish to delete this?')) {
+//   this.dataLoading = true;
+//   this.querySubscription = this._backendService.delOneDoc('product', docId)
+//       .subscribe(res => {
+//         if (res) {
+//           this.toggle('searchMode');
+//           this.dataLoading = false;
 
-        }
-      },
-      (error) => {
-        this.error = true;
-        this.errorMessage = error.message;
-        this.dataLoading = false;
-      },
-      () => { this.error = false; this.dataLoading = false; });
-    }
+//         }
+//       },
+//       (error) => {
+//         this.error = true;
+//         this.errorMessage = error.message;
+//         this.dataLoading = false;
+//       },
+//       () => { this.error = false; this.dataLoading = false; });
+//     }
+// }
+
+deleteDoc(docId) {
+  if (confirm("Are you sure want to delete this record?")) {
+      this.dataLoading = true;
+      this._backendService.delOneDoc('product', docId).then((res) => {
+          this.error = false;
+          this.errorMessage = "";
+          this.dataLoading = false;
+          this.toggle('searchMode');
+      }).catch(error => {
+          this.error = true;
+          this.errorMessage = error.message;
+          this.dataLoading = false;
+      });
+  }
 }
   // function for data table -results view
   applyFilter(filterValue: string) {

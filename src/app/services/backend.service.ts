@@ -4,13 +4,13 @@ import { Observable } from 'rxjs/Rx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 import * as firebase from 'firebase/app';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
+  private itemsCollection: AngularFirestoreCollection<any>;
   private itemDoc: AngularFirestoreDocument<any>;
   item: Observable<any>;
 
@@ -88,6 +88,39 @@ export class BackendService {
       username: this.afAuth.auth.currentUser.displayName,
       useremail: this.afAuth.auth.currentUser.email
     });
+  }
+
+  getDocs(coll: string, filters?: any) {
+    this.itemsCollection = this.afs.collection<any>(this.getCollectionURL(coll));
+    return this.itemsCollection.valueChanges();
+  }
+
+  getOneDoc(collType,docId) {
+    let docUrl = this.getCollectionURL(collType)+"/"+docId;
+    this.itemDoc = this.afs.doc<any>(docUrl);
+    return this.itemDoc.valueChanges();
+  }
+  updateDocs(coll: string, data: any, docId?: any) {
+    const id = this.afs.createId();
+    const item = { id, name };
+    const timestamp = this.timestamp
+    var docRef = this.afs.collection(this.getCollectionURL(coll)).doc(data._id);
+    return docRef.update({
+      ...data,
+      _id: id,
+      updatedAt: timestamp,
+      authid: this.afAuth.auth.currentUser.uid,
+      username: this.afAuth.auth.currentUser.displayName,
+      useremail: this.afAuth.auth.currentUser.email
+    });
+  }
+
+  delOneDoc(coll, docId) {
+    const id = this.afs.createId();
+    const item = { id, name };
+    const timestamp = this.timestamp
+    var docRef = this.afs.collection(this.getCollectionURL(coll)).doc(docId);
+    return docRef.delete();
   }
 
   //Temp fake functions below
